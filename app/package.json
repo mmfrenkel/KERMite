@@ -27,6 +27,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false --outputFile=./reports/clean_frontend_unit_tests_report.txt",
     "coverage": "react-scripts test --coverage --watchAll=false > ./reports/recent_frontend_coverage_report.txt",
+    "cli_test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . > ../reports/frontend/frontend_style_report_1206.txt"
   },

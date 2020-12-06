@@ -7,8 +7,8 @@ const ChatMessage = (props) => {
     const isUserMessage = props.message.userEmail === userEmail;
 
     return (
-        <div className="chat-message">
-            <div className="user-name" style={{ marginRight: isUserMessage ? '0px' : 'auto', marginLeft: isUserMessage ? 'auto' : '0px'}}>
+        <div className="chat-message" data-testid="chat-message">
+            <div className="user-name" data-testid="user-name" style={{ marginRight: isUserMessage ? '0px' : 'auto', marginLeft: isUserMessage ? 'auto' : '0px'}}>
                 { isUserMessage ? "" : props.message.userName}
             </div>
             <div className="message-container" style={{ marginRight: isUserMessage ? '0px' : 'auto', marginLeft: isUserMessage ? 'auto' : '0px'}}>

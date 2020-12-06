@@ -30,7 +30,7 @@ export default function PuzzleCard(props) {
     >
       <div className="main-info">
         <div className="title">Puzzle {puzzle.puzzle_id}</div>
-        <button className="hide-btn" name="hideButton" 
+        <button className="hide-btn" name="hideButton" data-testid="hideButton"
                 onClick={() => {
                   props.setHidePuzzleId(puzzle.puzzle_id);
                   props.setHideModalStatus(true);
