@@ -7,8 +7,8 @@ setup_git() {
 
 commit_files() {
   git checkout -b travis_results
-  git pull origin travis_results
-  git add travis_reports 
+  git add travis_reports
+  git pull origin travis_reports  
   git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
   echo "Commited test files..."
 }
