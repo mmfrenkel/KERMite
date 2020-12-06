@@ -19,6 +19,7 @@ git_show_current() {
 on_branch() {
     local branch
     branch="$(git_show_current)"
+    echo "On branch $branch"
     [ "$1" = "$branch" ] && return 0
     return 1
 }
@@ -32,15 +33,15 @@ check_branches() {
 }
 
 commit_files() {
+    local treports="./travis_reports"
 
     echo "Setting remote origin..."
     git remote set-url origin "https://mmfrenkel:${GH_TOKEN}@github.com/mmfrenkel/KERMit.git" > /dev/null 2>&1
 
     git checkout -b travis_results
-    git add travis_reports
-    git stash
-    git pull origin travis_results
-    git stash pop
+    [ ! -d "$treports" ] && mkdir "$treports"
+    mv tests "$treports"/backend
+    mv reports "$treports"/frontend
     git add travis_reports
     git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
     echo "Commited test files..."

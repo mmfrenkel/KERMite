@@ -22,13 +22,10 @@ before_install:
   - docker-compose ps -a
 
 script:
-  - docker exec -it kermit_backend_1 sh -c "./bin/run_backend_tests.sh unit"
+  - docker exec -it kermit_backend_1 bash -c "./bin/run_backend_tests.sh unit"
   - docker exec -it kermit_web_1 sh -c "npm test"
 
 after_script:
   - docker cp kermit_backend_1:/server/reports/tests .
   - docker cp kermit_web_1:/app/reports .
-  - mkdir travis_reports
-  - mv tests ./travis_reports/backend
-  - mv reports ./travis_reports/frontend
   - ./.travis_push.sh
