@@ -22,7 +22,7 @@ before_install:
   - docker-compose ps -a
 
 script:
-  - docker exec -it kermit_backend_1 bash -c "./bin/run_backend_tests.sh unit"
+  - docker exec -it kermit_backend_1 sh -c "./bin/run_backend_tests.sh unit"
   - docker exec -it kermit_web_1 sh -c "npm test"
 
 after_script:

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 run_type_d="all"
 test_dir_d="./tests"
