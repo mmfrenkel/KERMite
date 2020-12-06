@@ -1,8 +1,8 @@
 language: minimal
 
 branches:
-  except:
-    - travis_results
+  only:
+    - main
 
 env:
   matrix:
