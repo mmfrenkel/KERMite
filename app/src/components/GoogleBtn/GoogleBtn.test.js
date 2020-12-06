@@ -4,6 +4,6 @@ import GoogleBtn from './GoogleBtn';
 
 test('initially renders login button', async () => {
     const { getAllByText } = render(<GoogleBtn />);
-    const logInMessage = getAllByText('Login');
+    const logInMessage = getAllByText('Login to Play!');
     expect(logInMessage.length).toBe(1);
 });
