@@ -1,9 +1,11 @@
 import { render, within } from '@testing-library/react';
 import App from './App';
+import React from 'react';
 
-test('App renders a <GoogleBtn />', () => {
+// Renders login page if not logged in
+test('App renders a <LoginPage />', () => {
   const { getByTestId } = render(<App />);
   const app = getByTestId('app')
-  const googleBtn = within(app).getAllByTestId('login-btn')
-  expect(googleBtn.length).toBe(1);
+  const loginPageImg = within(app).getAllByTestId('login-page')
+  expect(loginPageImg.length).toBe(1);
 });

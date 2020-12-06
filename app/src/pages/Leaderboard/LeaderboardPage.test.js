@@ -1,12 +1,22 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { act } from 'react-dom/test-utils';
 import { render, screen } from "@testing-library/react";
 import LeaderboardPage from './LeaderboardPage.js';
-import { PLAYERS, EMPTY_PLAYERS } from '../data/mock_leaderboard_data.js'
+import { PLAYERS, EMPTY_PLAYERS } from '../../data/mock_leaderboard_data.js';
 
 function setupFetchStub(data) {
   return function fetchStub(_url) {
     return Promise.resolve({
       json: () => Promise.resolve({ players: data }),
+    })
+  }
+}
+
+function setupUndefinedFetchStub() {
+  return function fetchStub(_url) {
+    return Promise.resolve({
+      json: () => Promise.resolve({ }),
     })
   }
 }
@@ -26,5 +36,13 @@ test('renders with DataGrid table', async () => {
   expect(emptyMessage).toBeNull()
   const leaderboardTable = await screen.findAllByTestId('datagrid');
   expect(leaderboardTable).toHaveLength(1);
+  global.fetch.mockClear();
+});
+
+test('renders empty with undefined response', async () => {
+  jest.spyOn(global, "fetch").mockImplementation(setupUndefinedFetchStub());
+  render(<LeaderboardPage accessToken="mockToken" />);
+  const emptyMessage = await screen.findAllByText(/No players have finished a game./);
+  expect(emptyMessage).toHaveLength(1);
   global.fetch.mockClear();
 });
