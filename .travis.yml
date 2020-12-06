@@ -25,12 +25,5 @@ after_script:
   - mkdir travis_reports
   - mv tests ./travis_reports/backend
   - mv reports ./travis_reports/frontend
-
-deploy:
-  provider: pages
-  skip-cleanup: true
-  local_dir: travis_reports
-  github-token: $GH_TOKEN
-  keep-history: true
-  target_branch: travis_reports
+  - ./.travis_push.sh
 
