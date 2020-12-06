@@ -47,7 +47,7 @@ const GoogleBtn = () => {
         >
         </GoogleLogout> : <GoogleLogin
           clientId={CLIENT_ID}
-          buttonText='Login'
+          buttonText='Login to Play!'
           onSuccess={login}
           onFailure={handleLoginFailure}
           cookiePolicy={'single_host_origin'}

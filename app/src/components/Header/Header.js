@@ -12,9 +12,11 @@ const Header = () => {
       <div className="titleLogo">一緒に Sudoku</div>
       {isLoggedIn && (<Link to="/mypuzzles" className="nav-item">My Puzzles</Link>)}
       {isLoggedIn && (<Link to="/leaderboard-view" className="nav-item">Leaderboard</Link>)}
-      <div className="login-btn" data-testid="login-btn">
-        <GoogleBtn />
-      </div>
+      {isLoggedIn && (
+        <div className="login-btn" data-testid="login-btn">
+          <GoogleBtn />
+        </div>
+      )}
     </div>
   );
 };
