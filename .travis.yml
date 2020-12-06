@@ -19,4 +19,10 @@ script:
   - docker exec -it kermit_backend_1 sh -c "./bin/run_backend_tests.sh unit"
   - docker exec -it kermit_web_1 sh -c "npm test"
 
+after_script:
+  - docker cp kermit_backend_1:/server/reports/tests .
+  - docker cp kermit_web_1:/app/reports .
+  - mv tests backend_test_results
+  - mv reports frontend_test_results
+  - .travis_push.sh
 
