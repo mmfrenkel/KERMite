@@ -32,13 +32,13 @@ const HidePuzzleModal = (props) => {
     const [modalStyle] = useState(getModalStyle);
 
     return (
-        <div style={modalStyle} className={classes.paper}>
+        <div style={modalStyle} className={classes.paper} data-testid="hide-modal">
           <h2 className="modal-title">Delete puzzle {props.puzzleId}</h2>
           <div className="modal-section">
             <p>Are you sure you want to delete this puzzle?</p>
           </div>
-        <button className="btn" onClick={props.hidePuzzle}>Yes</button>
-        <button className="btn" onClick={() => props.setHideModalStatus(false)}>No</button>
+        <button className="btn" data-testid="yes-btn" onClick={props.hidePuzzle}>Yes</button>
+        <button className="btn" data-testid="no-btn" onClick={() => props.setHideModalStatus(false)}>No</button>
       </div>
     );
 };
