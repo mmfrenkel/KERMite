@@ -7,7 +7,7 @@ import GoogleBtn from '../../components/GoogleBtn/GoogleBtn';
 const LoginPage = () => {
   return (
     <PageTemplate>
-      <div className="loginPageButton">
+      <div className="loginPageButton" data-testid="login-page">
         <GoogleBtn />
       </div>
       <img src={background} alt="ppt background" className="loginPageBackground" />
