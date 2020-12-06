@@ -16,4 +16,4 @@ before_install:
   - docker ps -a # Confirm that all containers were built and are running in logs
 
 script:
-  - docker run kermit_backend ./bin/run_backend_tests.sh all ./tests
+  - docker run kermit_backend /server/bin/run_backend_tests.sh all /server/tests
