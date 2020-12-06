@@ -1,19 +1,22 @@
 language: minimal
-
 env:
-  - DOCKER_COMPOSE_VERSION=1.27.4
+  matrix:
+    - DOCKER_COMPOSE_VERSION=1.27.4
+  global:
+    secure: L2rx4zkCrMA1DmRW07qIq2e+56TDjXp8rhEJbxxO1k9c5a+gcxZBlb0ho34v+3lz9ImsXB2R246fCPKQh2lGzquYOYZkR3Qu2ZWOv9o21OQSw9hW/19Ep81YLkbqYYvgutqs6nS2CzlMx59PMRlqnyJHQzbfW2QYJUkzKDIRbhKgoHcaZk/dFdRzRJfYedyWmnK77QEZu1zXClP81JQeX/iRXQxYi2pdTec1GxCD5sWXLmEqF5ObOe0JcZt57+cAYSFUdE4l9d1fMBIioh9ULXTQ/5lhblDRYve57D1OrCK6Alw8JlRcVdXKECZTxdqZT4AK0zGZhjzs01vlsHR3+3s1agU1XkizZ+8NCrM4d8+J28F+thbago8c+uNSkW8uS3CcVFOnnSduDf5kSkWaYL21c4IZIBwEUeMRqwkWtVU+eaiGE7QSDrweaJrlwZzhoCKY0AIkfipWLxlDXiRc6l89KA8/sGEKQQLNEWuUlsqLX56GHJ7MMqEg43kjsM4CrTQ72Tif3XwVgAUF48HQtL3NNZrrlgITWkBEXDYqQ2JIMf8cK7vZ+uMu+zUi3sJ7bip/49WD3G1T8GV4ycj5QpxK8dk0K/AcehfIE6/VY49knohfNcNvlFzGflBLsGnGUXe8V1tY+nux6awr6fUfkj8mGIA+l2A8vTOhgGTE8m8=
 
 services:
   - docker
 
 before_install:
-  - docker-compose --version # When travis catches up in version can stop manual update
-  - curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s -m | tr ' ' -)" > docker-compose
+  - docker-compose --version
+  - curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname
+  -s -m | tr ' ' -)" > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
-  - docker-compose --version # Confirm that docker-compose was successfully updated
+  - docker-compose --version
   - docker-compose up -d
-  - docker-compose ps -a # Confirm that all containers were built and are running in logs
+  - docker-compose ps -a
 
 script:
   - docker exec -it kermit_backend_1 sh -c "./bin/run_backend_tests.sh unit"
@@ -25,5 +28,5 @@ after_script:
   - mkdir travis_reports
   - mv tests ./travis_reports/backend
   - mv reports ./travis_reports/frontend
-  - ./.travis_push.sh
+  - "./.travis_push.sh"
 
