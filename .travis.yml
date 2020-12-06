@@ -17,5 +17,4 @@ before_install:
 
 script:
   - docker exec -it kermit_backend_1 sh -c "python -m pytest -v ./tests/unit"
-  - docker exec -it kermit_frontend_1 sh -c "npm test"
-
+  - docker exec -it kermit_web_1 sh -c "npm test"
