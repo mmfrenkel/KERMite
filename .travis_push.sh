@@ -6,16 +6,18 @@ setup_git() {
 }
 
 commit_files() {
-  git checkout -b travis_results
-  git pull origin travis_results
-  git add travis_reports 
-  git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
-  echo "Commited test files..."
-}
 
-upload_files() {
   echo "Setting remote origin..."
   git remote set-url origin https://mmfrenkel:${GH_TOKEN}@github.com/mmfrenkel/KERMit.git > /dev/null 2>&1
+
+  git checkout -b travis_results
+  git add travis_reports
+  git stash
+  git pull origin travis_results 
+  git stash pop
+  git add travis_reports
+  git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
+  echo "Commited test files..."
   
   echo "Pushing travis CI results to github..."
   git push --quiet --set-upstream origin travis_results
@@ -23,5 +25,4 @@ upload_files() {
 
 setup_git
 commit_files
-upload_files
 
