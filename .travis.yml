@@ -3,6 +3,7 @@ language: minimal
 branches:
   only:
     - main
+    - nightly
 
 env:
   matrix:
@@ -30,4 +31,4 @@ after_script:
   - mkdir travis_reports
   - mv tests ./travis_reports/backend
   - mv reports ./travis_reports/frontend
-  - "./.travis_push.sh"
+  - ./.travis_push.sh
