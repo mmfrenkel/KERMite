@@ -13,7 +13,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version # Confirm that docker-compose was successfully updated
   - docker-compose up -d
-  - docker ps -a # Confirm that all containers were built and are running in logs
+  - docker-compose ps -a # Confirm that all containers were built and are running in logs
 
 script:
-  - docker run kermit_backend /server/bin/run_backend_tests.sh all /server/tests
+  - docker-compose exec kermit_backend ./bin/run_backend_tests.sh all ./tests
