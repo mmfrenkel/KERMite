@@ -131,7 +131,7 @@ const PuzzlePage = () => {
 
   return (
     <PageTemplate>
-      <div className={isMultiplayerGame ? 'puzzle-page' : null}>
+      <div className={isMultiplayerGame ? 'puzzle-page' : null} data-testid="puzzle-page">
         <div className={isMultiplayerGame ? 'puzzle-board' : null}>
           <SudokuBoard
             data-testid='sudoku-board'

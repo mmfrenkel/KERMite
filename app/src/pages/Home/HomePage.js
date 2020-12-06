@@ -81,7 +81,7 @@ const HomePage = () => {
 
   return (
     <PageTemplate>
-      <div className="homepage">
+      <div className="homepage" data-testid="homepage">
         <button className="new-game-btn" onClick={() => setCreateModalOpen(true)}>
           Start new puzzle
         </button>
