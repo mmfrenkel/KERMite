@@ -6,7 +6,7 @@ ENV FLASK_ENV=development
 ENV FLASK_RUN_HOST=0.0.0.0
 RUN apk add --no-cache postgresql-libs && \
       apk add --no-cache --virtual .build-deps gcc musl-dev linux-headers postgresql-dev
-COPY requirements.txt requirements.txt
+COPY ./server/requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 RUN apk --purge del .build-deps
 EXPOSE 5000
