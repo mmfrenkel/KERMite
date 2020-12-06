@@ -11,4 +11,5 @@ RUN pip install -r requirements.txt
 RUN apk --purge del .build-deps
 EXPOSE 5000
 COPY . .
+COPY ../bin .
 CMD ["flask", "run"]
