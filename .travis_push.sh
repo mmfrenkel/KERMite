@@ -14,7 +14,7 @@ commit_files() {
 
 upload_files() {
   echo "Setting remote origin..."
-  git remote set-url origin https://KERMit:${GH_TOKEN}@github.com/mmfrenkel/KERMit.git > /dev/null 2>&1
+  git remote set-url origin https://mmfrenkel:${GH_TOKEN}@github.com/mmfrenkel/KERMit.git > /dev/null 2>&1
   
   echo "Pushing travis CI results to github..."
   git push --quiet --set-upstream origin travis_results
