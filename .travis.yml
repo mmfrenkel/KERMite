@@ -1,5 +1,9 @@
 language: minimal
 
+branches:
+  except:
+    - travis_results
+
 env:
   matrix:
     - DOCKER_COMPOSE_VERSION=1.27.4
