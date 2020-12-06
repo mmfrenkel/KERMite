@@ -79,7 +79,7 @@ const LeaderboardPage = () => {
 
   return (
     <PageTemplate>
-      <div className="leaderboard">
+      <div className="leaderboard" data-testid="leaderboard">
         {isLoaded && (
           topPlayers.length === 0 ? <div className="empty-message">No players have finished a game.</div> :
             (

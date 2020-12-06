@@ -9,9 +9,9 @@ const Header = () => {
 
   return (
     <div className="header">
-      <div className="titleLogo">一緒に Sudoku</div>
-      {isLoggedIn && (<Link to="/mypuzzles" className="nav-item">My Puzzles</Link>)}
-      {isLoggedIn && (<Link to="/leaderboard-view" className="nav-item">Leaderboard</Link>)}
+      <div className="titleLogo" data-testid="titleLogo">一緒に Sudoku</div>
+      {isLoggedIn && (<Link to="/mypuzzles" className="nav-item" data-testid="nav-item">My Puzzles</Link>)}
+      {isLoggedIn && (<Link to="/leaderboard-view" className="nav-item" data-testid="nav-item">Leaderboard</Link>)}
       {isLoggedIn && (
         <div className="login-btn" data-testid="login-btn">
           <GoogleBtn />

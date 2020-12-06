@@ -47,7 +47,7 @@ const CreatePuzzleModal = (props) => {
     const [modalStyle] = useState(getModalStyle);
 
     return (
-        <div style={modalStyle} className={classes.paper}>
+        <div style={modalStyle} className={classes.paper} data-testid="create-modal">
           <h2 className="modal-title">Start new puzzle</h2>
           <div className="modal-section">
             <p className="label">
@@ -57,6 +57,7 @@ const CreatePuzzleModal = (props) => {
               value={selectedDifficulty}
               onChange={(event) => setSelectedDifficulty(event.target.value)}
               className="select-options"
+              data-testid="difficulty-options"
             >
               {
                 Object.entries(difficultyValues).map(([difficultyLabel, value]) => (
@@ -78,7 +79,7 @@ const CreatePuzzleModal = (props) => {
               error={additionalPlayers.length && additionalPlayers.some(player => !/@.*\./.test(player))}
             />
           </div>
-        <button className="submit-new-game" onClick={() => props.createGame({difficulty: selectedDifficulty, additionalPlayers})}>Create</button>
+        <button className="submit-new-game" data-testid="create-btn" onClick={() => props.createGame({difficulty: selectedDifficulty, additionalPlayers})}>Create</button>
       </div>
     );
 };
