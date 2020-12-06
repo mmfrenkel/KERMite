@@ -10,6 +10,6 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 RUN apk --purge del .build-deps
 EXPOSE 5000
-COPY . .
-COPY ../bin .
+COPY ./server .
+COPY bin ./bin
 CMD ["flask", "run"]
