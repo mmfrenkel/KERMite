@@ -11,8 +11,7 @@ services:
 
 before_install:
   - docker-compose --version
-  - curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname
-  -s -m | tr ' ' -)" > docker-compose
+  - curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s -m | tr ' ' -)" > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
