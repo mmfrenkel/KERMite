@@ -1,9 +1,8 @@
 language: minimal
 
 branches:
-  only:
-    - main
-    - nightly
+  except:
+    - travis_results
 
 env:
   matrix:

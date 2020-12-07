@@ -47,7 +47,6 @@ on_branch() {
     branch="$(git_show_current)"
     # shellcheck disable=SC2181
     [ $? -ne 0 ] && return 1
-    echo "On branch $branch"
     [ "$1" = "$branch" ] && return 0
     return 1
 }
@@ -72,6 +71,7 @@ commit_files() {
     git remote set-url origin "https://mmfrenkel:${GH_TOKEN}@github.com/mmfrenkel/KERMit.git" > /dev/null 2>&1
 
     git checkout -b travis_results
+    git pull
     [ ! -d "$treports" ] && mkdir "$treports"
     mv tests "$treports"/backend
     mv reports "$treports"/frontend
