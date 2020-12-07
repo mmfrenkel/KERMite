@@ -71,11 +71,13 @@ commit_files() {
     git remote set-url origin "https://mmfrenkel:${GH_TOKEN}@github.com/mmfrenkel/KERMit.git" > /dev/null 2>&1
 
     git checkout -b travis_results
+    git status
     git pull
     [ ! -d "$treports" ] && mkdir "$treports"
     mv tests "$treports"/backend
     mv reports "$treports"/frontend
     git add travis_reports
+    git status
     git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
     echo "Commited test files..."
 
