@@ -68,11 +68,11 @@ commit_files() {
     local treports="./travis_reports"
 
 
-    git pull
+    git pull origin travis_results
     git branch -a
     git checkout travis_results 2>/dev/null || git checkout -b travis_results
     git status
-    git pull
+    git pull origin travis_results
     [ ! -d "$treports" ] && mkdir "$treports"
     mv tests "$treports"/backend
     mv reports "$treports"/frontend
