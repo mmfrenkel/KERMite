@@ -1,0 +1,34 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.8.0, pytest-6.1.2, py-1.9.0, pluggy-0.13.1
+rootdir: /Users/meganfrenkel/Workspace/KERMit/server
+plugins: mock-3.3.1
+collected 159 items
+
+tests/unit/test_authentication.py ..............                         [  8%]
+tests/unit/test_google_auth.py ..                                        [ 10%]
+tests/unit/test_leaderboard.py ..                                        [ 11%]
+tests/unit/test_player.py .................                              [ 22%]
+tests/unit/test_puzzle_exception.py .                                    [ 22%]
+tests/unit/test_puzzle_pieces.py ...........                             [ 29%]
+tests/unit/test_sockets.py .....................                         [ 42%]
+tests/unit/test_sudoku_puzzle.py ....................................... [ 67%]
+.......                                                                  [ 71%]
+tests/unit/test_sudoku_puzzle_solution.py ...                            [ 73%]
+tests/unit/test_sudoku_resources.py .................................    [ 94%]
+tests/unit/test_user.py .........                                        [100%]
+
+=============================== warnings summary ===============================
+venv/lib/python3.8/site-packages/eventlet/patcher.py:1
+  /Users/meganfrenkel/Workspace/KERMit/server/venv/lib/python3.8/site-packages/eventlet/patcher.py:1: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+    import imp
+
+venv/lib/python3.8/site-packages/dns/hash.py:23
+  /Users/meganfrenkel/Workspace/KERMit/server/venv/lib/python3.8/site-packages/dns/hash.py:23: DeprecationWarning: dns.hash module will be removed in future versions. Please use hashlib instead.
+    warnings.warn(
+
+venv/lib/python3.8/site-packages/dns/namedict.py:35
+  /Users/meganfrenkel/Workspace/KERMit/server/venv/lib/python3.8/site-packages/dns/namedict.py:35: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.9 it will stop working
+    class NameDict(collections.MutableMapping):
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+======================= 159 passed, 3 warnings in 3.06s ========================

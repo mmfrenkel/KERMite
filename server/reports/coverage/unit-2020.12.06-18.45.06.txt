@@ -1,0 +1,38 @@
+Name                                        Stmts   Miss  Cover   Missing
+-------------------------------------------------------------------------
+backend/__init__.py                            17      0   100%
+backend/config.py                              22      0   100%
+backend/decorators.py                          19     10    47%   15, 28-35, 47
+backend/google_auth.py                         11      0   100%
+backend/models/__init__.py                      0      0   100%
+backend/models/player.py                       48      1    98%   69
+backend/models/puzzle_exception.py              6      0   100%
+backend/models/puzzle_pieces.py                40      0   100%
+backend/models/sudoku_puzzle.py               127      0   100%
+backend/models/user.py                         36      0   100%
+backend/resources/__init__.py                   0      0   100%
+backend/resources/authentication.py            48      0   100%
+backend/resources/leaderboard.py               15      0   100%
+backend/resources/sudoku_player.py             18      0   100%
+backend/resources/sudoku_puzzle.py             38      0   100%
+backend/resources/sudoku_puzzle_piece.py       43      0   100%
+backend/resources/sudoku_puzzles.py            41      0   100%
+backend/resources/sudoku_solution.py           13      0   100%
+backend/routes.py                              15      0   100%
+backend/sockets.py                             75      0   100%
+tests/__init__.py                               0      0   100%
+tests/unit/__init__.py                          0      0   100%
+tests/unit/mocks.py                            61      3    95%   18-20
+tests/unit/test_authentication.py             154      1    99%   358
+tests/unit/test_google_auth.py                 24      0   100%
+tests/unit/test_leaderboard.py                 50      2    96%   34, 73
+tests/unit/test_player.py                     114      0   100%
+tests/unit/test_puzzle_exception.py             5      0   100%
+tests/unit/test_puzzle_pieces.py               90      3    97%   57, 96, 135
+tests/unit/test_sockets.py                    114      0   100%
+tests/unit/test_sudoku_puzzle.py              246     19    92%   176, 186, 196, 206, 244, 254, 264, 274, 284, 294, 416, 445, 488, 498, 508, 518, 528, 538, 547
+tests/unit/test_sudoku_puzzle_solution.py      27      0   100%
+tests/unit/test_sudoku_resources.py           451     15    97%   200, 240, 275, 313, 357, 405, 452, 497, 783, 787, 979, 1009, 1038, 1042, 1067
+tests/unit/test_user.py                        60      2    97%   78, 131
+-------------------------------------------------------------------------
+TOTAL                                        2028     56    97%
