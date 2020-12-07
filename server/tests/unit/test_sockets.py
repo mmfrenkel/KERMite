@@ -5,6 +5,7 @@ import pytest
 from backend import app, socketio
 from backend.models.user import User
 from backend.google_auth import GoogleAuth
+from backend.sockets import remove_associated_lock
 from tests.unit.mocks import verification_token, mock_find_by_g_id,\
     mock_no_puzzles_for_player, mock_single_puzzles_for_player,  mock_get_puzzle
 
@@ -13,6 +14,39 @@ from tests.unit.mocks import verification_token, mock_find_by_g_id,\
 def flask_client():
     """A test client to use for each test"""
     return app.test_client()
+
+
+def test_remove_associated_lock_none():
+    """
+    Test remove associated lock, none associated.
+    """
+    import backend.sockets
+    backend.sockets.LOCKS = {}
+    request_sid = "12345"
+    puzzle_id = 1
+    assert not remove_associated_lock(request_sid,  puzzle_id)
+
+
+def test_remove_associated_lock_none_for_puzzle():
+    """
+    Test remove associated lock, none associated with puzzle.
+    """
+    import backend.sockets
+    backend.sockets.LOCKS = {"12345": {2: {"some lock information"}}}
+    request_sid = "12345"
+    puzzle_id = 1
+    assert not remove_associated_lock(request_sid,  puzzle_id)
+
+
+def test_remove_associated_lock_found():
+    """
+    Test remove associated lock, content found.
+    """
+    import backend.sockets
+    backend.sockets.LOCKS = {"12345": {1: {"some lock information"}}}
+    request_sid = "12345"
+    puzzle_id = 1
+    assert {"some lock information"} == remove_associated_lock(request_sid,  puzzle_id)
 
 
 def test_socketio_cannot_connect_without_credentials(flask_client):
@@ -221,6 +255,8 @@ def test_socketio_handle_add_lock(flask_client, verification_token, mock_find_by
         ], 'namespace': '/'}
     ]
 
+    import backend.sockets
+    assert len(backend.sockets.LOCKS) == 2
 
 def test_socketio_handle_lock_missing_puzzle_id(flask_client, verification_token, mock_find_by_g_id,
                                              mock_single_puzzles_for_player):
@@ -294,3 +330,60 @@ def test_socketio_handle_leave_missing_puzzle_id(flask_client, verification_toke
     assert recvd == [
         {'name': 'player_joined', 'args': [{'msg': 'Player joined room 1'}], 'namespace': '/'}
     ]
+
+
+def test_socketio_handle_add_lock_existing_lock(flask_client, verification_token, mock_find_by_g_id,
+                                             mock_single_puzzles_for_player):
+    """
+    Test handle re-emitting an addlock event in a room that the current websocket is in.
+    """
+    client = socketio.test_client(app, flask_test_client=flask_client, query_string="?auth=X")
+    client.emit('join', {'token': 'X', 'puzzle_id': 1})
+    client.emit('add_lock', {'puzzle_id': 1, 'x_coordinate': 1, 'y_coordinate': 5})
+    client.emit('add_lock', {'puzzle_id': 1, 'x_coordinate': 2, 'y_coordinate': 5})
+
+    recvd = client.get_received()
+    assert recvd == [
+        {
+            'name': 'player_joined',
+            'args': [{'msg': 'Player joined room 1'}],
+            'namespace': '/'
+        },
+        {
+            'name': 'lock_update_add',
+            'args': [{'puzzle_id': 1, 'x_coordinate': 1, 'y_coordinate': 5}],
+            'namespace': '/'
+        },
+        {
+            'name': 'lock_update_remove',
+            'args': [{'puzzle_id': 1, 'x_coordinate': 1, 'y_coordinate': 5}],
+            'namespace': '/'
+        },
+        {
+            'name': 'lock_update_add',
+            'args': [{'puzzle_id': 1, 'x_coordinate': 2, 'y_coordinate': 5}],
+            'namespace': '/'}
+    ]
+
+
+def test_socketio_disconnect_emit_lock_removal(flask_client, verification_token, mock_find_by_g_id,
+                                             mock_single_puzzles_for_player):
+    """
+    Test attempt disconnect websocket should be successful; if the client
+    has a lock, an emit event occurs to remove it.
+    """
+    import backend.sockets
+    backend.sockets.LOCKS = {}
+
+    client = socketio.test_client(app, flask_test_client=flask_client, query_string="?auth=X")
+    client.emit('join', {'token': 'X', 'puzzle_id': 1})
+    client.emit('add_lock', {'puzzle_id': 1, 'x_coordinate': 1, 'y_coordinate': 5})
+
+    assert len(backend.sockets.LOCKS) == 1
+    request_sid = list(backend.sockets.LOCKS.keys())[0]
+    assert backend.sockets.LOCKS[request_sid] == \
+           {1: {'puzzle_id': 1, 'x_coordinate': 1, 'y_coordinate': 5}}
+
+    client.disconnect()
+    assert not client.is_connected()
+    assert not backend.sockets.LOCKS

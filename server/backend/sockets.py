@@ -12,6 +12,8 @@ from backend.models.sudoku_puzzle import Puzzle
 from backend.resources.authentication import is_valid_token
 from backend.resources.sudoku_puzzle import sudoku_to_dict
 
+LOCKS = {}
+
 
 @socketio.on('connect')
 def client_connect():
@@ -42,6 +44,13 @@ def client_disconnect():
     from a web socket connection with the server.
     """
     print(f'Client with session ID {request.sid} has been disconnected')
+
+    # remove any locks that they are associated with
+    if LOCKS.get(request.sid, None):
+        user_locks = LOCKS.pop(request.sid)
+        for puzzle_id, old_lock in user_locks.items():
+            socketio.emit('lock_update_remove', old_lock, room=puzzle_id)
+
     socketio.emit('disconnect', {'msg': 'Client disconnected'}, room=request.sid)
 
 
@@ -112,14 +121,26 @@ def on_lock(data):
     In order to prevent users from working on the same puzzle piece at the same
     time, the frontend can emit "add_lock" events, which will be routed here
     to all currently members of the puzzle to prevent others from acting on that
-    piece at the same time.
+    piece at the same time. Ensures that a user can only have a single lock at a
+    given time, per puzzle.
     """
     if 'puzzle_id' not in data.keys():
         return
+    puzzle_id = int(data['puzzle_id'])
 
-    print(f"A new lock should be created; client with "
-          f"session ID {request.sid} is making a move.")
-    socketio.emit('lock_update_add', data, room=int(data['puzzle_id']))
+    print(f"A new lock should be created; client with session ID {request.sid} is making a move.")
+
+    # if person already has a lock somewhere in the same puzzle, remove it
+    if LOCKS.get(request.sid, None):
+        old_lock = remove_associated_lock(request.sid, puzzle_id)
+        if old_lock:
+            socketio.emit('lock_update_remove', old_lock, room=puzzle_id)
+    else:
+        LOCKS[request.sid] = {}
+
+    # save the new lock for the user
+    LOCKS[request.sid][puzzle_id] = data
+    socketio.emit('lock_update_add', data, room=puzzle_id)
 
 
 @socketio.on('remove_lock')
@@ -131,9 +152,11 @@ def on_lock_remove(data):
     """
     if 'puzzle_id' not in data.keys():
         return
+    puzzle_id = int(data['puzzle_id'])
 
     print("A new lock should be removed, based on user completing their submission.")
-    socketio.emit('lock_update_remove', data, room=int(data['puzzle_id']))
+    remove_associated_lock(request.sid, puzzle_id)
+    socketio.emit('lock_update_remove', data, room=puzzle_id)
 
 
 @socketio.on('leave')
@@ -146,6 +169,17 @@ def on_leave(data):
         return
 
     puzzle_id = int(data['puzzle_id'])
+    remove_associated_lock(request.sid, puzzle_id)
     leave_room(puzzle_id)
     socketio.emit('player_left', {"msg": f'Player left room {puzzle_id}'}, room=puzzle_id)
-    print(rooms())
+
+
+def remove_associated_lock(request_sid, puzzle_id):
+    """
+    Removes a lock from the current state of locks based on the request user and
+    the puzzle id specified. Returns the lock content that was previously stored.
+    """
+    # remove the lock from the locks associated with the user at that puzzle
+    if LOCKS.get(request_sid, None):
+        return LOCKS[request_sid].pop(puzzle_id, None)
+    return None
