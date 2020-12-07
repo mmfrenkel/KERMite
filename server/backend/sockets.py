@@ -169,7 +169,10 @@ def on_leave(data):
         return
 
     puzzle_id = int(data['puzzle_id'])
-    remove_associated_lock(request.sid, puzzle_id)
+    old_lock = remove_associated_lock(request.sid, puzzle_id)
+    if old_lock:
+        socketio.emit('lock_update_remove', old_lock, room=puzzle_id)
+
     leave_room(puzzle_id)
     socketio.emit('player_left', {"msg": f'Player left room {puzzle_id}'}, room=puzzle_id)
 
