@@ -67,8 +67,6 @@ check_branches() {
 commit_files() {
     local treports="./travis_reports"
 
-    echo "Setting remote origin..."
-    git remote set-url origin "https://mmfrenkel:${GH_TOKEN}@github.com/mmfrenkel/KERMit.git" > /dev/null 2>&1
 
     git pull
     git branch -a
@@ -80,6 +78,10 @@ commit_files() {
     mv reports "$treports"/frontend
     git add travis_reports
     git status
+
+    echo "Setting remote origin..."
+    git remote set-url origin "https://mmfrenkel:${GH_TOKEN}@github.com/mmfrenkel/KERMit.git" > /dev/null 2>&1
+
     git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
     echo "Commited test files..."
 
