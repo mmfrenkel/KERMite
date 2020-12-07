@@ -47,7 +47,7 @@ const PuzzlePage = () => {
   }, []);
   
   useEffect(() => {
-    const currSocket = socketIOClient("ws://127.0.0.1:5000/", {query: {auth: accessToken}, transports: ['websocket']});
+    const currSocket = socketIOClient(Endpoint.websocket(), {query: {auth: accessToken}, transports: ['websocket']});
     socket.current = currSocket;
 
     if (currSocket.disconnected) {

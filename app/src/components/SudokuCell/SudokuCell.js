@@ -27,7 +27,6 @@ export default function SudokuCell(props) {
   style.borderBottom = (props.y % 3 === 2) ? '3px solid black' : 'none';
 
   style.backgroundColor = (index === undefined || index === -1) ? 'white' : backgroundColors[index];
-  console.log(index);
 
   const firstName = player ? `${player.first_name.charAt(0).toUpperCase()}${player.first_name.slice(1)}` : '';
   const playerDisplayName = 

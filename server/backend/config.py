@@ -40,3 +40,4 @@ class ProductionConfig(BaseConfig):
     ENV = 'production'
     SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI_PROD')
     CORS_HEADERS = 'Content-Type'
+    CORS_SUPPORTS_CREDENTIALS=True

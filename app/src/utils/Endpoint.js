@@ -11,6 +11,7 @@ const Endpoint = {
   movePiece: ({puzzleId}) => `${backendRoot}/puzzles/${puzzleId}/piece`,
   getLeaderboard: () => `${backendRoot}/leaderboard`,
   hidePuzzle: ({hidePuzzleId}) => `${backendRoot}/puzzles/${hidePuzzleId}?hidden=True`,
+  websocket: () => `ws://${BACKEND_ADDRESS}:${BACKEND_PORT}/`,
 };
 
 export default Endpoint;
