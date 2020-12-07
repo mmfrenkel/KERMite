@@ -5,17 +5,38 @@ setup_git() {
     git config --global user.name "Travis CI"
 }
 
-git_show_current() {
-    if [ -z "$TRAVIS_BRANCH" ];then
-        echo "$TRAVIS_BRANCH"
+travis_real_branch() {
+    if [ -z "$TRAVIS_PULL_REQUEST" ];then
+        # not a travis build
+        return 1
+    fi
+    local branch
+    if [ "$TRAVIS_PULL_REQUEST" = "false" ];then
+        branch="$TRAVIS_BRANCH"
+    else
+        branch="$TRAVIS_PULL_REQUEST_BRANCH"
+    fi
+    if [ -n "$branch" ];then
+        echo "$branch"
         return 0
     fi
+    return 1
+}
 
+git_show_current() {
     local branch
-    branch="$(git branch --show-current 2>/dev/null)"
+    branch="$(travis_real_branch)"
+    ret="$?"
+    if [ "$ret" -eq 2 ];then
+        return 2 # On pull request, abort
+    fi
     # shellcheck disable=SC2181
-    if [ $? -ne 0 ];then
-        branch="$(git rev-parse --abbrev-ref HEAD)"
+    if [ "$ret" -ne 0 ];then
+        branch="$(git branch --show-current 2>/dev/null)"
+        # shellcheck disable=SC2181
+        if [ $? -ne 0 ];then
+            branch="$(git rev-parse --abbrev-ref HEAD)"
+        fi
     fi
     echo "$branch"
     return 0
@@ -24,6 +45,8 @@ git_show_current() {
 on_branch() {
     local branch
     branch="$(git_show_current)"
+    # shellcheck disable=SC2181
+    [ $? -ne 0 ] && return 1
     echo "On branch $branch"
     [ "$1" = "$branch" ] && return 0
     return 1
@@ -31,8 +54,13 @@ on_branch() {
 
 check_branches() {
     local branches=(main nightly)
+
+    local cur_branch
+    cur_branch="$(git_show_current)"
+    # shellcheck disable=SC2181
+    [ $? -ne 0 ] && return 1
     for branch in "${branches[@]}";do
-        on_branch "$branch" && return 0
+        [ "$branch" = "$cur_branch" ] && return 0
     done
     return 1
 }
