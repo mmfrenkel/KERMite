@@ -337,6 +337,9 @@ def test_socketio_handle_add_lock_existing_lock(flask_client, verification_token
     """
     Test handle re-emitting an addlock event in a room that the current websocket is in.
     """
+    import backend.sockets
+    backend.sockets.LOCKS = {}
+
     client = socketio.test_client(app, flask_test_client=flask_client, query_string="?auth=X")
     client.emit('join', {'token': 'X', 'puzzle_id': 1})
     client.emit('add_lock', {'puzzle_id': 1, 'x_coordinate': 1, 'y_coordinate': 5})
@@ -364,6 +367,11 @@ def test_socketio_handle_add_lock_existing_lock(flask_client, verification_token
             'args': [{'puzzle_id': 1, 'x_coordinate': 2, 'y_coordinate': 5}],
             'namespace': '/'}
     ]
+
+    assert len(backend.sockets.LOCKS) == 1
+    request_sid = list(backend.sockets.LOCKS.keys())[0]
+    assert backend.sockets.LOCKS[request_sid] == \
+           {1: {'puzzle_id': 1, 'x_coordinate': 2, 'y_coordinate': 5}}
 
 
 def test_socketio_disconnect_emit_lock_removal(flask_client, verification_token, mock_find_by_g_id,
