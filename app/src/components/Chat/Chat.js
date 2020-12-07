@@ -37,8 +37,8 @@ const Chat = forwardRef((props, socket) => {
         setChatList(div);
       }}>
         {
-          (props.messages).map((messageObj) => (
-            <ChatMessage message={messageObj} />
+          (props.messages).map((messageObj, i) => (
+            <ChatMessage key={i} message={messageObj} />
           ))
         }
       </div>

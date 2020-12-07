@@ -10,7 +10,7 @@ async function getSolution({ accessToken, puzzleId, onSuccess }) {
     method: 'GET',
     headers: { Authorization: `Bearer ${accessToken}` },
   };
-  const response = await fetch(`/puzzles/${puzzleId}/solution`, requestOptions)
+  const response = await fetch(Endpoint.getSolution({puzzleId}), requestOptions)
   //const response = await Promise.resolve(getSolvedSolutionResponse());
   const json = await response.json();
   onSuccess(json);
@@ -22,7 +22,7 @@ const SudokuBoard = forwardRef((props, socket) => {
   const [checked, setChecked] = useState(false);
   const { playersLockingCells, players } = props;
 
-  const movePiece = useCallback(async ({ puzzleId, x, y, value, onSuccess }) => {
+  const movePiece = useCallback(async ({ puzzleId, x, y, value }) => {
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -85,9 +85,11 @@ const SudokuBoard = forwardRef((props, socket) => {
             getSolution({
               accessToken,
               puzzleId: props.puzzleId,
-              onSuccess: json => setSolved(json.discrepancy.length === 0),
+              onSuccess: json => {
+                setSolved(json.discrepancy.length === 0);
+                setChecked(true);
+              },
             })
-            setChecked(true)
           }}>
             Check Answer
           </button>
