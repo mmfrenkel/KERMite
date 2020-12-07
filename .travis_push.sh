@@ -70,7 +70,9 @@ commit_files() {
     echo "Setting remote origin..."
     git remote set-url origin "https://mmfrenkel:${GH_TOKEN}@github.com/mmfrenkel/KERMit.git" > /dev/null 2>&1
 
-    git checkout -b travis_results
+    git pull
+    git branch -a
+    git checkout travis_results 2>/dev/null || git checkout -b travis_results
     git status
     git pull
     [ ! -d "$treports" ] && mkdir "$treports"
