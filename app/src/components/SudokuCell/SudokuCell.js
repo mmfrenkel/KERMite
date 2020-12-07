@@ -12,8 +12,6 @@ const backgroundColors = Object.freeze([
 
 export default function SudokuCell(props) {
   const {userEmail} = useContext(CurrentUserContext);
-  console.log('USER EMAIL:');
-  console.log(userEmail);
   const {player, index} = props.playerData ?? {};
   const [value, setValue] = useState(props.number);
   const style = {};
@@ -33,16 +31,26 @@ export default function SudokuCell(props) {
     player ? (player.last_name ? `${firstName} ${player.last_name[0].toUpperCase()}.` : firstName) : '';
 
   const className = props.prefilled ? 'fixedCell' : 'inputCell';
+  const isReadonly = props.prefilled || (props.playerData && props.playerData.player.email !== userEmail);
+
   return (
     <input 
       type="text"
       pattern="[1-9]"
       className={className}
       style={style}
-      readOnly={props.prefilled || (props.playerData && props.playerData.player.email !== userEmail)}
+      readOnly={isReadonly}
       value={value || ''}
-      onFocus={props.addLock}
-      onBlur={props.removeLock}
+      onFocus={() => {
+        if (!isReadonly) {
+          props.addLock();
+        }
+      }}
+      onBlur={() => {
+        if (!isReadonly) {
+          props.removeLock();
+        }
+      }}
       onInput={event => {
         const userInput = (event.target.validity.valid) ? 
           event.target.value : value;

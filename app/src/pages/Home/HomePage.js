@@ -89,7 +89,9 @@ const HomePage = () => {
           open={createModalOpen}
           onClose={() => setCreateModalOpen(false)}
         >
-          <CreatePuzzleModalContent createGame={createGame} />
+          <>
+            <CreatePuzzleModalContent createGame={createGame} />
+          </>
         </Modal>
         <Modal
           open={hideModalOpen}

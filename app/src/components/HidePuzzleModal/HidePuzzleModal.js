@@ -1,6 +1,6 @@
 import './HidePuzzleModal.css';
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 
 function getModalStyle() {
     const top = 50;
@@ -13,7 +13,7 @@ function getModalStyle() {
     };
   }
   
-const useStyles = makeStyles((theme) => ({
+const styles = theme => ({
     paper: {
         color: 'rgb(43, 43, 43)',
         display: 'flex', 
@@ -25,22 +25,32 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
-}));
+});
 
-const HidePuzzleModal = (props) => {
-    const classes = useStyles();
-    const [modalStyle] = useState(getModalStyle);
+class HidePuzzleModal extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        modalStyle: getModalStyle(),
+      };
+    }
 
-    return (
-        <div style={modalStyle} className={classes.paper} data-testid="hide-modal">
-          <h2 className="modal-title">Delete puzzle {props.puzzleId}</h2>
-          <div className="modal-section">
-            <p>Are you sure you want to delete this puzzle?</p>
-          </div>
-        <button className="btn" data-testid="yes-btn" onClick={props.hidePuzzle}>Yes</button>
-        <button className="btn" data-testid="no-btn" onClick={() => props.setHideModalStatus(false)}>No</button>
-      </div>
-    );
+    render() {
+      const {classes} = this.props;
+      return (
+          <div style={this.state.modalStyle} className={classes.paper} data-testid="hide-modal">
+            <h2 className="modal-title">Delete puzzle {this.props.puzzleId}</h2>
+            <div className="modal-section">
+              <p>
+                Are you sure you want to delete this puzzle?
+                This action cannot be undone
+              </p>
+            </div>
+          <button className="btn" data-testid="yes-btn" onClick={this.props.hidePuzzle}>Yes</button>
+          <button className="btn" data-testid="no-btn" onClick={() => this.props.setHideModalStatus(false)}>No</button>
+        </div>
+      );
+    }
 };
 
-export default HidePuzzleModal;
+export default withStyles(styles)(HidePuzzleModal);
