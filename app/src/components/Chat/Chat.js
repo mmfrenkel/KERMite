@@ -17,48 +17,48 @@ const Chat = forwardRef((props, socket) => {
     chatList.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
   }, [chatList]);
 
-  useEffect(() => {  
+  useEffect(() => {
     if (chatList !== null) {
-        scrollToBottom();
+      scrollToBottom();
     }
   }, [scrollToBottom, chatList, props.messages]);
 
   const addMessage = useCallback(() => {
     if (currMessage !== '') {
-        socket.current.emit('message', {puzzle_id: props.puzzleId, userName: userName, userEmail: userEmail, messageString: currMessage});
-        setCurrMessage('');
+      socket.current.emit('message', { puzzle_id: props.puzzleId, userName: userName, userEmail: userEmail, messageString: currMessage });
+      setCurrMessage('');
     }
   }, [currMessage, userName, userEmail, props.puzzleId, socket]);
 
   return (
     <div className="chatSection">
-        <div className="chat-label">Chat</div>
-        <div className="chat-view" ref={(div) => {
-            setChatList(div);
-        }}>
-            {
-                (props.messages).map((messageObj) => (
-                  <ChatMessage message={messageObj} />
-                ))
+      <div className="chat-label">Chat</div>
+      <div className="chat-view" ref={(div) => {
+        setChatList(div);
+      }}>
+        {
+          (props.messages).map((messageObj, i) => (
+            <ChatMessage key={i} message={messageObj} />
+          ))
+        }
+      </div>
+      <div className="chat-input">
+        <TextField
+          className="text-field"
+          id="standard-multiline-flexible"
+          placeholder="Type your message here!"
+          onChange={event => {
+            setCurrMessage(event.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              addMessage();
             }
-        </div>
-        <div className="chat-input">
-            <TextField 
-                className="text-field"
-                id="standard-multiline-flexible" 
-                placeholder="Type your message here!" 
-                onChange={event => {
-                    setCurrMessage(event.target.value);
-                }}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                        addMessage();
-                    }   
-                }}
-                rows={2}
-                value={currMessage}
-            />
-        </div>
+          }}
+          rows={2}
+          value={currMessage}
+        />
+      </div>
     </div>
   );
 });

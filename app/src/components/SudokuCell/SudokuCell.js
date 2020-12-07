@@ -1,4 +1,4 @@
-import React, { useState, useContext} from 'react'
+import React, { useState, useContext, useEffect} from 'react'
 import PropTypes from 'prop-types';
 import CurrentUserContext from '../../context/CurrentUserContext';
 import './SudokuCell.css'
@@ -12,8 +12,6 @@ const backgroundColors = Object.freeze([
 
 export default function SudokuCell(props) {
   const {userEmail} = useContext(CurrentUserContext);
-  console.log('USER EMAIL:');
-  console.log(userEmail);
   const {player, index} = props.playerData ?? {};
   const [value, setValue] = useState(props.number);
   const style = {};
@@ -27,23 +25,36 @@ export default function SudokuCell(props) {
   style.borderBottom = (props.y % 3 === 2) ? '3px solid black' : 'none';
 
   style.backgroundColor = (index === undefined || index === -1) ? 'white' : backgroundColors[index];
-  console.log(index);
 
   const firstName = player ? `${player.first_name.charAt(0).toUpperCase()}${player.first_name.slice(1)}` : '';
   const playerDisplayName = 
     player ? (player.last_name ? `${firstName} ${player.last_name[0].toUpperCase()}.` : firstName) : '';
 
   const className = props.prefilled ? 'fixedCell' : 'inputCell';
+  const isReadonly = props.prefilled || (props.playerData && props.playerData.player.email !== userEmail);
+
+  useEffect(() => {
+    setValue(props.number);
+  }, [props.number]);
+
   return (
     <input 
       type="text"
       pattern="[1-9]"
       className={className}
       style={style}
-      readOnly={props.prefilled || (props.playerData && props.playerData.player.email !== userEmail)}
-      value={value || ''}
-      onFocus={props.addLock}
-      onBlur={props.removeLock}
+      readOnly={isReadonly}
+      value={props.number || value || ''}
+      onFocus={() => {
+        if (!isReadonly) {
+          props.addLock();
+        }
+      }}
+      onBlur={() => {
+        if (!isReadonly) {
+          props.removeLock();
+        }
+      }}
       onInput={event => {
         const userInput = (event.target.validity.valid) ? 
           event.target.value : value;

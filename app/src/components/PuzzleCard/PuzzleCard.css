@@ -57,4 +57,9 @@
     margin-bottom: auto;
     margin-left: auto;
     width: 60px;
-  }
+}
+
+.hide-btn:hover {
+    background-color: #fdc8c8;
+    cursor: pointer;
+}

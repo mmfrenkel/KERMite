@@ -17,8 +17,8 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
-  - docker-compose up -d
-  - docker-compose ps -a
+  - docker-compose -f docker-compose.test.yml up -d
+  - docker-compose -f docker-compose.test.yml ps -a
 
 script:
   - docker exec -it kermit_backend_1 sh -c "./bin/run_backend_tests.sh unit"

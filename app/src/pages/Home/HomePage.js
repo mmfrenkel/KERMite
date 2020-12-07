@@ -22,7 +22,7 @@ const HomePage = () => {
     setRedirect(`/puzzle/${puzzleId}`);
   }, []);
 
-  const createGame = useCallback(({difficulty, additionalPlayers}) => {
+  const createGame = useCallback(({ difficulty, additionalPlayers }) => {
     if (difficulty >= 0.1 && difficulty <= 0.99) {
       const size = 3;
       const requestOptions = {
@@ -34,7 +34,7 @@ const HomePage = () => {
           'size': size,
         }),
       };
-      const url = Endpoint.createPuzzle({difficulty, size, additionalPlayers});
+      const url = Endpoint.createPuzzle({ difficulty, size, additionalPlayers });
       fetch(url, requestOptions).then(res => res.json()).then(data => {
         redirectToPuzzle(data.puzzle_id);
       });
@@ -63,7 +63,7 @@ const HomePage = () => {
           'hidden': true,
         }),
       };
-      const url = Endpoint.hidePuzzle({hidePuzzleId});
+      const url = Endpoint.hidePuzzle({ hidePuzzleId });
       fetch(url, requestOptions).then(res => res.json()).then(data => {
         setHideModalOpen(false);
         updatePuzzles(accessToken, setPuzzles);
@@ -89,13 +89,17 @@ const HomePage = () => {
           open={createModalOpen}
           onClose={() => setCreateModalOpen(false)}
         >
-          <CreatePuzzleModalContent createGame={createGame} />
+          <>
+            <CreatePuzzleModalContent createGame={createGame} />
+          </>
         </Modal>
         <Modal
           open={hideModalOpen}
           onClose={() => setHideModalOpen(false)}
         >
-          <HidePuzzleModal puzzleId={hidePuzzleId} setHideModalStatus={setHideModalOpen} hidePuzzle={hidePuzzle}/>
+          <>
+            <HidePuzzleModal puzzleId={hidePuzzleId} setHideModalStatus={setHideModalOpen} hidePuzzle={hidePuzzle} />
+          </>
         </Modal>
         {puzzles.length === 0 && isLoaded
           && (<div className="empty-message">

@@ -13,7 +13,7 @@ async function getPuzzle({ accessToken, puzzleId, onSuccess }) {
     method: 'GET',
     headers: { Authorization: `Bearer ${accessToken}` },
   };
-  const response = await fetch(Endpoint.getPuzzle({puzzleId}), requestOptions);
+  const response = await fetch(Endpoint.getPuzzle({ puzzleId }), requestOptions);
   const json = await response.json();
   onSuccess(json);
 }
@@ -27,16 +27,14 @@ const PuzzlePage = () => {
   const [players, setPlayers] = useState([]);
   const isMultiplayerGame = players.length > 1;
   const { accessToken } = useContext(CurrentUserContext);
-  const socket = useRef(null); 
+  const socket = useRef(null);
 
-  const updatePuzzle = useCallback(({pieces, completed, players}) => {
+  const updatePuzzle = useCallback(({ pieces, completed, players }) => {
     setPieces(
       pieces.sort((pieceA, pieceB) =>
         (pieceA.y_coordinate * 10 + pieceA.x_coordinate) - (pieceB.y_coordinate * 10 + pieceB.x_coordinate)
-    ));
+      ));
     setSolved(completed);
-    console.log('PLAYERS:');
-    console.log(players);
     if (players !== undefined) {
       setPlayers(players);
     }
@@ -45,23 +43,23 @@ const PuzzlePage = () => {
   const addMessage = useCallback((data) => {
     setMessages(oldMessages => [...oldMessages, data]);
   }, []);
-  
+
   useEffect(() => {
-    const currSocket = socketIOClient("ws://127.0.0.1:5000/", {query: {auth: accessToken}, transports: ['websocket']});
+    const currSocket = socketIOClient(Endpoint.websocket(), { query: { auth: accessToken }, transports: ['websocket'] });
     socket.current = currSocket;
 
     if (currSocket.disconnected) {
-      currSocket.connect({query: {auth: accessToken}});
+      currSocket.connect({ query: { auth: accessToken } });
     }
-    currSocket.emit('join', {puzzle_id: puzzleId, token: accessToken});
-    
+    currSocket.emit('join', { puzzle_id: puzzleId, token: accessToken });
+
     return () => {
-      currSocket.emit('leave', {puzzle_id: puzzleId});
+      currSocket.emit('leave', { puzzle_id: puzzleId });
       currSocket.disconnect();
     };
   }, []);
 
-  useEffect(() => {  
+  useEffect(() => {
     getPuzzle({
       accessToken,
       puzzleId,
@@ -69,11 +67,9 @@ const PuzzlePage = () => {
     });
   }, [accessToken, puzzleId, updatePuzzle]);
 
-  useEffect(() => {  
-    socket.current.on("puzzle_update", ({pieces, completed}) => {
-      console.log(pieces);
-      console.log(completed);
-      updatePuzzle({pieces, completed})
+  useEffect(() => {
+    socket.current.on("puzzle_update", ({ pieces, completed }) => {
+      updatePuzzle({ pieces, completed })
     });
 
     return () => {
@@ -81,10 +77,8 @@ const PuzzlePage = () => {
     };
   }, [socket, updatePuzzle]);
 
-  useEffect(() => {  
+  useEffect(() => {
     socket.current.on("message_update", (data) => {
-      console.log('got message:');
-      console.log(data);
       addMessage(data);
     });
 
@@ -93,9 +87,9 @@ const PuzzlePage = () => {
     };
   }, [socket, addMessage]);
 
-  useEffect(() => {  
-    socket.current.on('lock_update_remove', ({x_coordinate: x, y_coordinate: y}) => {
-      const newPlayersLockingCells = {...playersLockingCells};
+  useEffect(() => {
+    socket.current.on('lock_update_remove', ({ x_coordinate: x, y_coordinate: y }) => {
+      const newPlayersLockingCells = { ...playersLockingCells };
       delete newPlayersLockingCells[coordsToString(x, y)];
       setPlayersLockingCells(newPlayersLockingCells);
     });
@@ -105,11 +99,11 @@ const PuzzlePage = () => {
     };
   }, [socket, playersLockingCells]);
 
-  useEffect(() => {  
-    socket.current.on('lock_update_add', ({x_coordinate: x, y_coordinate: y, player}) => {
+  useEffect(() => {
+    socket.current.on('lock_update_add', ({ x_coordinate: x, y_coordinate: y, player }) => {
       setPlayersLockingCells({
-        ...playersLockingCells, 
-        [coordsToString(x, y)]: {player, index: players.findIndex(p => p.id === player.id)}
+        ...playersLockingCells,
+        [coordsToString(x, y)]: { player, index: players.findIndex(p => p.id === player.id) }
       });
     });
 
@@ -118,10 +112,8 @@ const PuzzlePage = () => {
     };
   }, [socket, players, playersLockingCells]);
 
-  useEffect(() => {  
+  useEffect(() => {
     socket.current.on("player_joined", data => {
-      console.log('player joined:');
-      console.log(data);
     });
 
     return () => {
@@ -143,7 +135,7 @@ const PuzzlePage = () => {
             ref={socket}
           />
         </div>
-        {isMultiplayerGame && <div className="chat"><Chat messages={messages} puzzleId={puzzleId} ref={socket}/></div> }
+        {isMultiplayerGame && <div className="chat"><Chat messages={messages} puzzleId={puzzleId} ref={socket} /></div>}
       </div>
     </PageTemplate>
   );
