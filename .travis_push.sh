@@ -6,6 +6,11 @@ setup_git() {
 }
 
 git_show_current() {
+    if [ -z "$TRAVIS_BRANCH" ];then
+        echo "$TRAVIS_BRANCH"
+        return 0
+    fi
+
     local branch
     branch="$(git branch --show-current 2>/dev/null)"
     # shellcheck disable=SC2181
