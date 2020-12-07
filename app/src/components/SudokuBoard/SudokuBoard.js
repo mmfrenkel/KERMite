@@ -58,7 +58,7 @@ const SudokuBoard = forwardRef((props, socket) => {
         {
           props.gridState.map(({ value, x_coordinate: x, y_coordinate: y, static_piece }) =>
             <SudokuCell
-              key={Number(value) * 100 + y * 10 + x}
+              key={y * 10 + x}
               x={x}
               y={y}
               addLock={() => addLock({ puzzleId: props.puzzleId, x, y })}

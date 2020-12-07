@@ -1,4 +1,4 @@
-import React, { useState, useContext} from 'react'
+import React, { useState, useContext, useEffect} from 'react'
 import PropTypes from 'prop-types';
 import CurrentUserContext from '../../context/CurrentUserContext';
 import './SudokuCell.css'
@@ -33,6 +33,10 @@ export default function SudokuCell(props) {
   const className = props.prefilled ? 'fixedCell' : 'inputCell';
   const isReadonly = props.prefilled || (props.playerData && props.playerData.player.email !== userEmail);
 
+  useEffect(() => {
+    setValue(props.number);
+  }, [props.number]);
+
   return (
     <input 
       type="text"
@@ -40,7 +44,7 @@ export default function SudokuCell(props) {
       className={className}
       style={style}
       readOnly={isReadonly}
-      value={value || ''}
+      value={props.number || value || ''}
       onFocus={() => {
         if (!isReadonly) {
           props.addLock();
