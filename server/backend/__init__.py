@@ -16,9 +16,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO
 # import eventlet
 
-# from . import routes      # pylint: disable=[wrong-import-position, import-self]
-# from . import decorators  # pylint: disable=[wrong-import-position, import-self]
-# from . import sockets     # pylint: disable=[wrong-import-position, import-self]
 
 app = Flask(__name__)
 
@@ -33,3 +30,8 @@ db = SQLAlchemy(app)
 socketio = SocketIO(app, manage_session=True, cors_allowed_origins="*",
                     async_mode='eventlet', logger=True, engineio_logger=True)
 api = Api(app)
+
+
+from . import routes      # pylint: disable=[wrong-import-position, import-self]
+from . import decorators  # pylint: disable=[wrong-import-position, import-self]
+from . import sockets     # pylint: disable=[wrong-import-position, import-self]
