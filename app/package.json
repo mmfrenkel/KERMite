@@ -25,16 +25,23 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false --outputFile=./reports/clean_frontend_unit_tests_report.txt",
+    "test": "react-scripts test --watchAll=false --json --outputFile=./reports/clean_frontend_unit_tests_report.txt",
     "coverage": "react-scripts test --coverage --watchAll=false > ./reports/recent_frontend_coverage_report.txt",
     "cli_test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint . > ../reports/frontend/frontend_style_report_1206.txt"
+    "lint": "eslint . > ./reports/frontend_style_report.txt"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/index.js",
+      "!src/reportWebVitals.js"
     ]
   },
   "browserslist": {
