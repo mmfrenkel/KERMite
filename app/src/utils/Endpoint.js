@@ -7,7 +7,7 @@ const Endpoint = {
   register: () => `${backendRoot}/register`,
   getPuzzle: ({puzzleId}) => `${backendRoot}/puzzles/${puzzleId}`,
   getSolution: ({puzzleId}) => `${backendRoot}/puzzles/${puzzleId}/solution`,
-  createPuzzle: ({difficulty, additionalPlayers, size = 3}) => `${backendRoot}/puzzles?difficulty=${difficulty}&size=${size}&additional_players=${additionalPlayers.join(',')}`,
+  createPuzzle: ({difficulty, additionalPlayers, size = 3}) => `${backendRoot}/puzzles`,
   getPuzzles: () => `${backendRoot}/puzzles`,
   movePiece: ({puzzleId}) => `${backendRoot}/puzzles/${puzzleId}/piece`,
   getLeaderboard: () => `${backendRoot}/leaderboard`,

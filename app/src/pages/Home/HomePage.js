@@ -27,7 +27,7 @@ const HomePage = () => {
       const size = 3;
       const requestOptions = {
         method: 'POST',
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json'},
         body: JSON.stringify({
           'additional_players': additionalPlayers,
           'difficulty': difficulty,
