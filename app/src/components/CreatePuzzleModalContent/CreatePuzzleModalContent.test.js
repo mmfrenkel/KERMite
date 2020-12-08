@@ -25,6 +25,14 @@ test('submit calls createGame', async () => {
     expect(createGame).toHaveBeenCalledTimes(1);
 });
 
-// Need to figure out how to test email input:
-//     test('can input email on modal', async () => {
-// });
+test('can input email on modal', async () => {
+    const createGame = jest.fn();
+    const {getAllByTestId, getAllByRole} = render(<CreatePuzzleModal createGame={createGame}/>);
+    fireEvent.mouseDown(getAllByRole('button')[0]);
+    const listbox = within(getAllByRole('listbox')[0]);
+    fireEvent.click(listbox.getByText(/Warmup/i));
+    const inputBox = within(getAllByTestId('modal-section')[0]).getAllByRole('textbox')[0];
+    fireEvent.change(inputBox, { target: { value: 'janedoe@gmail.com,bobsmith@gmail.com' } });
+    fireEvent.click(getAllByTestId('create-btn')[0]);
+    expect(createGame).toHaveBeenCalledTimes(1);
+});

@@ -77,12 +77,13 @@ class CreatePuzzleModal extends React.Component {
             }
           </Select>
         </div>
-        <div className="modal-section">
+        <div className="modal-section" data-testid="modal-section">
           <p className="label">Invite Friends: </p>
           <TextField
             id="standard-multiline-flexible"
             label="Emails"
             placeholder="joe@gmail.com, mary@gmail.com"
+            data-testid="input"
             onChange={event => {
               const additionalPlayers = event.target.value.replace(' ', '').split(',').filter(player => player);
               this.setState({ additionalPlayers });
