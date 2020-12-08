@@ -14,7 +14,6 @@ from flask import Flask
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO
-# import eventlet
 
 
 app = Flask(__name__)
@@ -32,6 +31,6 @@ socketio = SocketIO(app, manage_session=True, cors_allowed_origins="*",
 api = Api(app)
 
 
-from . import routes      # pylint: disable=[wrong-import-position, import-self]
-from . import decorators  # pylint: disable=[wrong-import-position, import-self]
-from . import sockets     # pylint: disable=[wrong-import-position, import-self]
+from . import routes      # noqa pylint: disable=[wrong-import-position, import-self]
+from . import decorators  # noqa pylint: disable=[wrong-import-position, import-self]
+from . import sockets     # noqa pylint: disable=[wrong-import-position, import-self]

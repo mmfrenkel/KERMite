@@ -19,7 +19,7 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI_DEV')
     CORS_HEADERS = 'Content-Type'
-    CORS_SUPPORTS_CREDENTIALS=True
+    CORS_SUPPORTS_CREDENTIALS = True
 
 
 class UnitTestingConfig(BaseConfig):
@@ -40,4 +40,4 @@ class ProductionConfig(BaseConfig):
     ENV = 'production'
     SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI_PROD')
     CORS_HEADERS = 'Content-Type'
-    CORS_SUPPORTS_CREDENTIALS=True
+    CORS_SUPPORTS_CREDENTIALS = True
