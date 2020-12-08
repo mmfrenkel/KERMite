@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/mmfrenkel/KERMit.svg?branch=main)](https://travis-ci.com/mmfrenkel/KERMit)
+
 #  Isshoni Sudoku
 
 A web-based Sudoku application built with Flask and React. The application allows users to play 
