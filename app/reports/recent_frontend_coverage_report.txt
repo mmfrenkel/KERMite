@@ -1,7 +1,7 @@
 -----------------------------------------|---------|----------|---------|---------|----------------------------------
 File                                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                
 -----------------------------------------|---------|----------|---------|---------|----------------------------------
-All files                                |   87.58 |    75.86 |   78.63 |   88.24 |                                  
+All files                                |   91.96 |    77.12 |    82.2 |   92.18 |                                  
  src                                     |     100 |       50 |     100 |     100 |                                  
   App.js                                 |     100 |       50 |     100 |     100 | 27                               
  src/components/Chat                     |     100 |    94.44 |     100 |     100 |                                  
@@ -15,15 +15,15 @@ All files                                |   87.58 |    75.86 |   78.63 |   88.2
   HidePuzzleModal.js                     |     100 |      100 |     100 |     100 |                                  
  src/components/PuzzleCard               |     100 |      100 |     100 |     100 |                                  
   PuzzleCard.js                          |     100 |      100 |     100 |     100 |                                  
- src/components/SudokuBoard              |   81.82 |    83.33 |   71.43 |   80.65 |                                  
-  SudokuBoard.js                         |   81.82 |    83.33 |   71.43 |   80.65 | 26-39,48,65-69                   
- src/components/SudokuCell               |   86.21 |    63.89 |   66.67 |   86.21 |                                  
-  SudokuCell.js                          |   86.21 |    63.89 |   66.67 |   86.21 | 60-65                            
+ src/components/SudokuBoard              |   93.94 |    91.67 |   85.71 |   93.55 |                                  
+  SudokuBoard.js                         |   93.94 |    91.67 |   85.71 |   93.55 | 48,65                            
+ src/components/SudokuCell               |     100 |    69.44 |   83.33 |     100 |                                  
+  SudokuCell.js                          |     100 |    69.44 |   83.33 |     100 | 27-31,34,50-63                   
  src/context                             |     100 |      100 |       0 |     100 |                                  
   CurrentUserContext.js                  |     100 |      100 |       0 |     100 |                                  
- src/data                                |      50 |      100 |       0 |   57.89 |                                  
+ src/data                                |   95.45 |      100 |   66.67 |     100 |                                  
   get_puzzle_response.js                 |    87.5 |      100 |       0 |     100 |                                  
-  get_solution_response.js               |       0 |      100 |       0 |       0 | 1-666                            
+  get_solution_response.js               |     100 |      100 |     100 |     100 |                                  
   mock_leaderboard_data.js               |     100 |      100 |     100 |     100 |                                  
   mock_puzzles_data.js                   |     100 |      100 |     100 |     100 |                                  
  src/pages/Home                          |   95.24 |    84.62 |    87.5 |   94.87 |                                  
@@ -34,7 +34,8 @@ All files                                |   87.58 |    75.86 |   78.63 |   88.2
   LoginPage.js                           |     100 |      100 |     100 |     100 |                                  
  src/pages/Puzzle                        |   77.78 |       40 |   61.54 |   79.03 |                                  
   PuzzlePage.js                          |   77.78 |       40 |   61.54 |   79.03 | 35-39,44,72,82,92-94,104-106,145 
- src/pages/Template                      |     100 |      100 |     100 |     100 |                                  
+ src/pages/Template                      |   28.57 |        0 |      50 |   28.57 |                                  
+  App.js                                 |       0 |        0 |       0 |       0 | 16-21                            
   PageTemplate.js                        |     100 |      100 |     100 |     100 |                                  
  src/utils                               |   94.12 |       40 |   90.91 |   93.75 |                                  
   ApiClient.js                           |     100 |      100 |     100 |     100 |                                  

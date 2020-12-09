@@ -54,7 +54,7 @@ const SudokuBoard = forwardRef((props, socket) => {
 
   return (
     <div>
-      <div className="gridContainer">
+      <div className="gridContainer" data-testid="grid-container">
         {
           props.gridState.map(({ value, x_coordinate: x, y_coordinate: y, static_piece }) =>
             <SudokuCell
@@ -81,7 +81,7 @@ const SudokuBoard = forwardRef((props, socket) => {
       {props.solved ?
         <h2 className="puzzleStatusText">You win!</h2> :
         <div>
-          <button className="checkSolutionBtn" onClick={() => {
+          <button className="checkSolutionBtn" data-testid='check-soln-btn' onClick={() => {
             getSolution({
               accessToken,
               puzzleId: props.puzzleId,

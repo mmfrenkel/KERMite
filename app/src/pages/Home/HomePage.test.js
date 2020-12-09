@@ -34,150 +34,185 @@ function setupPuzzleFetchStub() {
     }
 }
 
-test('renders start new puzzle button', async() => {
-    jest.spyOn(global, "fetch").mockImplementation(setupFetchStub(EMPTY_PUZZLES));
-    act(() => {
-        render(<Router><HomePage /></Router>);
-    });    
-    const buttonMessage = await screen.findAllByText(/Start new puzzle/);
-    expect(buttonMessage).toHaveLength(1);
-    global.fetch.mockClear();
-});
+describe('HomePage', () => {
+    let fetch;
 
-test('renders no puzzles message', async() => {
-    jest.spyOn(global, "fetch").mockImplementation(setupFetchStub(EMPTY_PUZZLES));
-    act(() => {
-        render(<Router><HomePage /></Router>);
-    });    
-    const emptyMessage = await screen.findAllByText(/You do not currently have any puzzles./);
-    expect(emptyMessage).toHaveLength(1);
-    global.fetch.mockClear();
-});
-
-test('renders puzzle cards for user with >0 puzzles', async() => {
-    jest.spyOn(global, "fetch").mockImplementation(setupFetchStub(FULL_PUZZLES));
-    act(() => {
-        render(<Router><HomePage /></Router>);
-    });    
-    const puzzleCardsContainer = screen.queryByTestId('puzzle-cards');
-    expect(puzzleCardsContainer).not.toBeNull();
-    await waitFor(() => expect((screen.getAllByTestId("puzzle-card")).length).toBe(3));
-    global.fetch.mockClear();
-});
-
-test('renders empty page if response undefined', async() => {
-    jest.spyOn(global, "fetch").mockImplementation(setupUndefinedFetchStub());
-    act(() => {
-        render(<Router><HomePage /></Router>);
+    beforeEach(() => {
+        fetch = jest.spyOn(global, "fetch");
+        fetch.mockImplementation(setupFetchStub(EMPTY_PUZZLES));
     });
-    const emptyMessage = await screen.findAllByText(/You do not currently have any puzzles./);
-    expect(emptyMessage).toHaveLength(1);
-    global.fetch.mockClear();
-});
 
-test('clicking delete button on puzzle opens modal', async() => {
-    jest.spyOn(global, "fetch").mockImplementation(setupFetchStub(FULL_PUZZLES));
-    act(() => {
-        render(<Router><HomePage /></Router>);
+    afterEach(() => {
+        fetch.mockClear();
     });
-    await waitFor(() => expect((screen.getAllByTestId("puzzle-card")).length).toBe(3));
-    fireEvent.click(screen.getAllByTestId('hideButton')[0]);
-    const modalContent = screen.getByTestId('hide-modal');
-    expect(modalContent).not.toBeNull();
-    global.fetch.mockClear();
-});
 
-test('clicking yes on hide modal triggers fetch', async() => {
-    const fetch = jest.spyOn(global, "fetch").mockImplementation(setupFetchStub(FULL_PUZZLES));
-    act(() => {
-        render(<Router><HomePage /></Router>);
+    it('renders start new puzzle button', async() => {
+        fetch.mockImplementation(setupFetchStub(EMPTY_PUZZLES));
+        act(() => {
+            render(<Router><HomePage /></Router>);
+        });    
+        const buttonMessage = await screen.findAllByText(/Start new puzzle/);
+        expect(buttonMessage).toHaveLength(1);
     });
-    await waitFor(() => expect((screen.getAllByTestId("puzzle-card")).length).toBe(3));
-    expect(fetch).toHaveBeenCalledTimes(1);
-    fireEvent.click(screen.getAllByTestId('hideButton')[0]);
-    fireEvent.click(screen.getByTestId('yes-btn'));
-    expect(fetch).toHaveBeenCalledTimes(2);
-    global.fetch.mockClear();
-});
 
-test('clicking yes closes hide modal', async() => {
-    jest.spyOn(global, "fetch").mockImplementation(setupFetchStub(FULL_PUZZLES));
-    act(() => {
-        render(<Router><HomePage /></Router>);
+    it('renders no puzzles message', async() => {
+        fetch.mockImplementation(setupFetchStub(EMPTY_PUZZLES));
+        act(() => {
+            render(<Router><HomePage /></Router>);
+        });    
+        const emptyMessage = await screen.findAllByText(/You do not currently have any puzzles./);
+        expect(emptyMessage).toHaveLength(1);
     });
-    await waitFor(() => expect((screen.getAllByTestId("puzzle-card")).length).toBe(3));
-    fireEvent.click(screen.getAllByTestId('hideButton')[0]);
-    fireEvent.click(screen.getByTestId('yes-btn'));
-    await waitFor(() => expect(screen.queryByTestId('hide-modal')).toBeNull());
-    global.fetch.mockClear();
-});
 
-test('clicking no on hide modal does not call fetch', async() => {
-    const fetch = jest.spyOn(global, "fetch").mockImplementation(setupFetchStub(FULL_PUZZLES));
-    act(() => {
-        render(<Router><HomePage /></Router>);
+    it('renders puzzle cards for user with >0 puzzles', async() => {
+        fetch.mockImplementation(setupFetchStub(FULL_PUZZLES));
+        act(() => {
+            render(<Router><HomePage /></Router>);
+        });    
+        const puzzleCardsContainer = screen.queryByTestId('puzzle-cards');
+        expect(puzzleCardsContainer).not.toBeNull();
+        await waitFor(() => expect((screen.getAllByTestId("puzzle-card")).length).toBe(3));
     });
-    await waitFor(() => expect((screen.getAllByTestId("puzzle-card")).length).toBe(3));
-    expect(fetch).toHaveBeenCalledTimes(1);
-    fireEvent.click(screen.getAllByTestId('hideButton')[0]);
-    fireEvent.click(screen.getByTestId('no-btn'));
-    expect(fetch).toHaveBeenCalledTimes(1);
-    global.fetch.mockClear();
-});
 
-test('clicking no closes hide modal', async() => {
-    jest.spyOn(global, "fetch").mockImplementation(setupFetchStub(FULL_PUZZLES));
-    act(() => {
-        render(<Router><HomePage /></Router>);
+    it('renders empty page if response undefined', async() => {
+        fetch.mockImplementation(setupUndefinedFetchStub());
+        act(() => {
+            render(<Router><HomePage /></Router>);
+        });
+        const emptyMessage = await screen.findAllByText(/You do not currently have any puzzles./);
+        expect(emptyMessage).toHaveLength(1);
     });
-    await waitFor(() => expect((screen.getAllByTestId("puzzle-card")).length).toBe(3));
-    fireEvent.click(screen.getAllByTestId('hideButton')[0]);
-    fireEvent.click(screen.getByTestId('no-btn'));
-    await waitFor(() => expect(screen.queryByTestId('hide-modal')).toBeNull());
-    global.fetch.mockClear();
-});
 
-test('create game button opens create modal', async() => {
-    jest.spyOn(global, "fetch").mockImplementation(setupFetchStub(EMPTY_PUZZLES));
-    act(() => {
-        render(<Router><HomePage /></Router>);
+    it('clicking delete button on puzzle opens modal', async() => {
+        fetch.mockImplementation(setupFetchStub(FULL_PUZZLES));
+        act(() => {
+            render(<Router><HomePage /></Router>);
+        });
+        await waitFor(() => expect((screen.getAllByTestId("puzzle-card")).length).toBe(3));
+        act(() => {
+            fireEvent.click(screen.getAllByTestId('hideButton')[0]);
+        });
+        const modalContent = screen.getByTestId('hide-modal');
+        expect(modalContent).not.toBeNull();
     });
-    fireEvent.click(screen.getByText('Start new puzzle'));
-    const modalContent = screen.getByTestId('create-modal');
-    expect(modalContent).not.toBeNull();
-    global.fetch.mockClear();
-});
 
-test('creating game with modal calls fetch', async() => {
-    jest.spyOn(global, "fetch").mockImplementation(setupPuzzleFetchStub());
-    act(() => {
-        render(<Router><HomePage /></Router>);
-    });    
-    expect(fetch).toHaveBeenCalledTimes(1);
-    fireEvent.click(screen.getByText('Start new puzzle'));
-    const modalContent = within(screen.getByTestId('create-modal'));
-    fireEvent.mouseDown(modalContent.getAllByRole('button')[0]);
-    const listbox = within(screen.getAllByRole('listbox', {hidden: true})[0]);
-    fireEvent.click(listbox.getByText(/Warmup/i));
-    fireEvent.click(modalContent.getAllByTestId('create-btn')[0]);
-    expect(fetch).toHaveBeenCalledTimes(2);
-});
+    it('clicking yes on hide modal triggers fetch', async() => {
+        fetch.mockImplementation(setupFetchStub(FULL_PUZZLES));
+        act(() => {
+            render(<Router><HomePage /></Router>);
+        });
+        await waitFor(() => expect((screen.getAllByTestId("puzzle-card")).length).toBe(3));
+        expect(fetch).toHaveBeenCalledTimes(1);
+        act(() => {
+            fireEvent.click(screen.getAllByTestId('hideButton')[0]);
+        });
+        act(() => {
+            fireEvent.click(screen.getByTestId('yes-btn'));
+        });
+        expect(fetch).toHaveBeenCalledTimes(2);
+    });
 
-test('creating game with modal redirects', async() => {
-    jest.spyOn(global, "fetch").mockImplementation(setupPuzzleFetchStub());
-    act(() => {
-        render(
-            <Router>
-                <HomePage />
-                <Route path="/puzzle/:puzzleId">
-                    <PuzzlePage />
-                </Route>
-            </Router>
-        );
-    });    
-    act(() => fireEvent.click(screen.getByText('Start new puzzle')));
-    const modalContent = within(screen.getByTestId('create-modal'));
-    act(() => fireEvent.click(modalContent.getAllByTestId('create-btn')[0]));
-    const puzzlePage = screen.getAllByTestId('puzzle-page');
-    expect(puzzlePage.length).toBe(1);
+    it('clicking yes closes hide modal', async() => {
+        fetch.mockImplementation(setupFetchStub(FULL_PUZZLES));
+        act(() => {
+            render(<Router><HomePage /></Router>);
+        });
+        await waitFor(() => expect((screen.getAllByTestId("puzzle-card")).length).toBe(3));
+        act(() => {
+            fireEvent.click(screen.getAllByTestId('hideButton')[0]);
+        });
+        act(() => {
+            fireEvent.click(screen.getByTestId('yes-btn'));
+        });
+        await waitFor(() => expect(screen.queryByTestId('hide-modal')).toBeNull());
+    });
+
+    it('clicking no on hide modal does not call fetch', async() => {
+        fetch.mockImplementation(setupFetchStub(FULL_PUZZLES));
+        act(() => {
+            render(<Router><HomePage /></Router>);
+        });
+        await waitFor(() => expect((screen.getAllByTestId("puzzle-card")).length).toBe(3));
+        expect(fetch).toHaveBeenCalledTimes(1);
+        act(() => {
+            fireEvent.click(screen.getAllByTestId('hideButton')[0]);
+        });
+        act(() => {
+            fireEvent.click(screen.getByTestId('no-btn'));
+        });
+        expect(fetch).toHaveBeenCalledTimes(1);
+    });
+
+    it('clicking no closes hide modal', async() => {
+        fetch.mockImplementation(setupFetchStub(FULL_PUZZLES));
+        act(() => {
+            render(<Router><HomePage /></Router>);
+        });
+        await waitFor(() => expect((screen.getAllByTestId("puzzle-card")).length).toBe(3));
+        act(() => {
+            fireEvent.click(screen.getAllByTestId('hideButton')[0]);
+        });
+        act(() => {
+            fireEvent.click(screen.getByTestId('no-btn'));
+        });
+        await waitFor(() => expect(screen.queryByTestId('hide-modal')).toBeNull());
+    });
+
+    it('create game button opens create modal', async() => {
+        fetch.mockImplementation(setupFetchStub(EMPTY_PUZZLES));
+        act(() => {
+            render(<Router><HomePage /></Router>);
+        });
+        act(() => {
+            fireEvent.click(screen.getByText('Start new puzzle'));
+        })
+        const modalContent = screen.getByTestId('create-modal');
+        expect(modalContent).not.toBeNull();
+    });
+
+    it('creating game with modal calls fetch', async() => {
+        fetch.mockImplementation(setupPuzzleFetchStub());
+        act(() => {
+            render(<Router><HomePage /></Router>);
+        });    
+        expect(fetch).toHaveBeenCalledTimes(1);
+        act(() => {
+            fireEvent.click(screen.getByText('Start new puzzle'));
+        });
+        const modalContent = within(screen.getByTestId('create-modal'));
+        act(() => {
+            fireEvent.mouseDown(modalContent.getAllByRole('button')[0]);
+        });
+        const listbox = within(screen.getAllByRole('listbox', {hidden: true})[0]);
+        act(() => {
+            fireEvent.click(listbox.getByText(/Warmup/i));
+        });
+        act(() => {
+            fireEvent.click(modalContent.getAllByTestId('create-btn')[0]);
+        });
+        expect(fetch).toHaveBeenCalledTimes(2);
+    });
+
+    it('creating game with modal redirects', async() => {
+        fetch.mockImplementation(setupPuzzleFetchStub());
+        act(() => {
+            render(
+                <Router>
+                    <HomePage />
+                    <Route path="/puzzle/:puzzleId">
+                        <PuzzlePage />
+                    </Route>
+                </Router>
+            );
+        });    
+        act(() => {
+            fireEvent.click(screen.getByText('Start new puzzle'));
+        });
+        const modalContent = within(screen.getByTestId('create-modal'));
+        act(() => {
+            fireEvent.click(modalContent.getAllByTestId('create-btn')[0]);
+        });
+        const puzzlePage = screen.getAllByTestId('puzzle-page');
+        expect(puzzlePage.length).toBe(1);
+    });
 });

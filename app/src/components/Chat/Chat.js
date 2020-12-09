@@ -31,7 +31,7 @@ const Chat = forwardRef((props, socket) => {
   }, [currMessage, userName, userEmail, props.puzzleId, socket]);
 
   return (
-    <div className="chatSection">
+    <div className="chatSection" data-testid="chat-section">
       <div className="chat-label">Chat</div>
       <div className="chat-view" ref={(div) => {
         setChatList(div);
