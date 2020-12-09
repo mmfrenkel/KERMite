@@ -39,6 +39,7 @@ export default function SudokuCell(props) {
 
   return (
     <input 
+      data-testid="sudoku-cell"
       type="text"
       pattern="[1-9]"
       className={className}

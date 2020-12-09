@@ -2,7 +2,7 @@ const PUZZLE_ID = 1;
 const COMPLETED = false;
 const DIFFICULTY = 0.5;
 const POINT_VALUE = 90;
-const PIECES = [
+export const PIECES = [
   {
     "x_coordinate": 0,
     "y_coordinate": 0,
