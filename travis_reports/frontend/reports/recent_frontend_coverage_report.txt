@@ -1,0 +1,42 @@
+-----------------------------------------|---------|----------|---------|---------|----------------------------------
+File                                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                
+-----------------------------------------|---------|----------|---------|---------|----------------------------------
+All files                                |   87.58 |    75.86 |   78.63 |   88.24 |                                  
+ src                                     |     100 |       50 |     100 |     100 |                                  
+  App.js                                 |     100 |       50 |     100 |     100 | 27                               
+ src/components/Chat                     |     100 |    94.44 |     100 |     100 |                                  
+  Chat.js                                |     100 |     87.5 |     100 |     100 | 17                               
+  ChatMessage.js                         |     100 |      100 |     100 |     100 |                                  
+ src/components/CreatePuzzleModalContent |     100 |      100 |     100 |     100 |                                  
+  CreatePuzzleModalContent.js            |     100 |      100 |     100 |     100 |                                  
+ src/components/Header                   |     100 |      100 |     100 |     100 |                                  
+  Header.js                              |     100 |      100 |     100 |     100 |                                  
+ src/components/HidePuzzleModal          |     100 |      100 |     100 |     100 |                                  
+  HidePuzzleModal.js                     |     100 |      100 |     100 |     100 |                                  
+ src/components/PuzzleCard               |     100 |      100 |     100 |     100 |                                  
+  PuzzleCard.js                          |     100 |      100 |     100 |     100 |                                  
+ src/components/SudokuBoard              |   81.82 |    83.33 |   71.43 |   80.65 |                                  
+  SudokuBoard.js                         |   81.82 |    83.33 |   71.43 |   80.65 | 26-39,48,65-69                   
+ src/components/SudokuCell               |   86.21 |    63.89 |   66.67 |   86.21 |                                  
+  SudokuCell.js                          |   86.21 |    63.89 |   66.67 |   86.21 | 60-65                            
+ src/context                             |     100 |      100 |       0 |     100 |                                  
+  CurrentUserContext.js                  |     100 |      100 |       0 |     100 |                                  
+ src/data                                |      50 |      100 |       0 |   57.89 |                                  
+  get_puzzle_response.js                 |    87.5 |      100 |       0 |     100 |                                  
+  get_solution_response.js               |       0 |      100 |       0 |       0 | 1-666                            
+  mock_leaderboard_data.js               |     100 |      100 |     100 |     100 |                                  
+  mock_puzzles_data.js                   |     100 |      100 |     100 |     100 |                                  
+ src/pages/Home                          |   95.24 |    84.62 |    87.5 |   94.87 |                                  
+  HomePage.js                            |   95.24 |    84.62 |    87.5 |   94.87 | 90-98                            
+ src/pages/Leaderboard                   |     100 |      100 |     100 |     100 |                                  
+  LeaderboardPage.js                     |     100 |      100 |     100 |     100 |                                  
+ src/pages/Login                         |     100 |      100 |     100 |     100 |                                  
+  LoginPage.js                           |     100 |      100 |     100 |     100 |                                  
+ src/pages/Puzzle                        |   77.78 |       40 |   61.54 |   79.03 |                                  
+  PuzzlePage.js                          |   77.78 |       40 |   61.54 |   79.03 | 35-39,44,72,82,92-94,104-106,145 
+ src/pages/Template                      |     100 |      100 |     100 |     100 |                                  
+  PageTemplate.js                        |     100 |      100 |     100 |     100 |                                  
+ src/utils                               |   94.12 |       40 |   90.91 |   93.75 |                                  
+  ApiClient.js                           |     100 |      100 |     100 |     100 |                                  
+  Endpoint.js                            |   92.31 |       40 |   88.89 |   92.31 | 12                               
+-----------------------------------------|---------|----------|---------|---------|----------------------------------
