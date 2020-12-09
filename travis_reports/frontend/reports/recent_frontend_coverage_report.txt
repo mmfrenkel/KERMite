@@ -1,0 +1,41 @@
+-----------------------------------------|---------|----------|---------|---------|----------------------------
+File                                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s          
+-----------------------------------------|---------|----------|---------|---------|----------------------------
+All files                                |   95.59 |    84.68 |   85.32 |   96.03 |                            
+ src                                     |     100 |       50 |     100 |     100 |                            
+  App.js                                 |     100 |       50 |     100 |     100 | 27                         
+ src/components/Chat                     |     100 |    94.44 |     100 |     100 |                            
+  Chat.js                                |     100 |     87.5 |     100 |     100 | 17                         
+  ChatMessage.js                         |     100 |      100 |     100 |     100 |                            
+ src/components/CreatePuzzleModalContent |     100 |      100 |     100 |     100 |                            
+  CreatePuzzleModalContent.js            |     100 |      100 |     100 |     100 |                            
+ src/components/Header                   |     100 |      100 |     100 |     100 |                            
+  Header.js                              |     100 |      100 |     100 |     100 |                            
+ src/components/HidePuzzleModal          |     100 |      100 |     100 |     100 |                            
+  HidePuzzleModal.js                     |     100 |      100 |     100 |     100 |                            
+ src/components/PuzzleCard               |     100 |      100 |     100 |     100 |                            
+  PuzzleCard.js                          |     100 |      100 |     100 |     100 |                            
+ src/components/SudokuBoard              |     100 |    91.67 |     100 |     100 |                            
+  SudokuBoard.js                         |     100 |    91.67 |     100 |     100 | 35                         
+ src/components/SudokuCell               |     100 |    69.44 |   83.33 |     100 |                            
+  SudokuCell.js                          |     100 |    69.44 |   83.33 |     100 | 27-31,34,50-63             
+ src/context                             |     100 |      100 |       0 |     100 |                            
+  CurrentUserContext.js                  |     100 |      100 |       0 |     100 |                            
+ src/data                                |   95.83 |      100 |      75 |     100 |                            
+  get_puzzle_response.js                 |      90 |      100 |      50 |     100 |                            
+  get_solution_response.js               |     100 |      100 |     100 |     100 |                            
+  mock_leaderboard_data.js               |     100 |      100 |     100 |     100 |                            
+  mock_puzzles_data.js                   |     100 |      100 |     100 |     100 |                            
+ src/pages/Home                          |   95.24 |    84.62 |    87.5 |   94.87 |                            
+  HomePage.js                            |   95.24 |    84.62 |    87.5 |   94.87 | 90-98                      
+ src/pages/Leaderboard                   |     100 |      100 |     100 |     100 |                            
+  LeaderboardPage.js                     |     100 |      100 |     100 |     100 |                            
+ src/pages/Login                         |     100 |      100 |     100 |     100 |                            
+  LoginPage.js                           |     100 |      100 |     100 |     100 |                            
+ src/pages/Puzzle                        |   84.13 |       90 |   65.38 |   85.48 |                            
+  PuzzlePage.js                          |   84.13 |       90 |   65.38 |   85.48 | 44,72,82,92-94,104-106,145 
+ src/pages/Template                      |     100 |      100 |     100 |     100 |                            
+  PageTemplate.js                        |     100 |      100 |     100 |     100 |                            
+ src/utils                               |     100 |      100 |     100 |     100 |                            
+  ApiClient.js                           |     100 |      100 |     100 |     100 |                            
+-----------------------------------------|---------|----------|---------|---------|----------------------------
