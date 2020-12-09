@@ -79,4 +79,57 @@ describe('SudokuCell', () => {
     const input = getAllByRole('textbox')[0];
     expect(input).toHaveStyle(`border-top: 3px solid black;`);
   });
+
+  it('has a white background color for undefined playerData', () => {
+    const {getByRole} = render(
+      <CurrentUserContext.Provider value={{userEmail:"bobsmith@gmail.com", userName:"Bob Smith"}}>
+        <SudokuCell 
+          number={7}
+          prefilled={false}
+          addLock={() => {}}
+          removeLock={() => {}}
+          x={3}
+          y={3}
+        />
+      </CurrentUserContext.Provider>
+    );
+    const input = getByRole('textbox');
+    expect(input).toHaveStyle(`background-color: white;`);
+  });
+
+  it('has a white background color if playerData specified with missing index', () => {
+    const {getByRole} = render(
+      <CurrentUserContext.Provider value={{userEmail:"bobsmith@gmail.com", userName:"Bob Smith"}}>
+        <SudokuCell 
+          number={7}
+          prefilled={false}
+          addLock={() => {}}
+          removeLock={() => {}}
+          x={3}
+          y={3}
+          playerData={{index: -1, player: {first_name: 'Chuck', last_name: 'Green', id: 2}}}
+        />
+      </CurrentUserContext.Provider>
+    );
+    const input = getByRole('textbox');
+    expect(input).toHaveStyle(`background-color: white;`);
+  });
+
+  it('does not have a white background color if playerData specified', () => {
+    const {getByRole} = render(
+      <CurrentUserContext.Provider value={{userEmail:"bobsmith@gmail.com", userName:"Bob Smith"}}>
+        <SudokuCell 
+          number={7}
+          prefilled={false}
+          addLock={() => {}}
+          removeLock={() => {}}
+          x={3}
+          y={3}
+          playerData={{index: 1, player: {first_name: 'Chuck', last_name: 'Green', id: 2}}}
+        />
+      </CurrentUserContext.Provider>
+    );
+    const input = getByRole('textbox');
+    expect(input).not.toHaveStyle(`background-color: white;`);
+  });
 });

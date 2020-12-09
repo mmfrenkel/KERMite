@@ -43,7 +43,8 @@
       "src/**/*.{js,jsx}",
       "!src/index.js",
       "!src/reportWebVitals.js",
-      "!src/components/GoogleBtn/GoogleBtn.js"
+      "!src/components/GoogleBtn/GoogleBtn.js",
+      "!src/utils/Endpoint.js"
     ]
   },
   "browserslist": {

@@ -116,6 +116,32 @@ describe('SudokuBoard', () => {
       "player": currentPlayer, "puzzle_id": "1", "x_coordinate": 0, "y_coordinate": 0});
   });
 
+  it('emits remove_lock event when a user moves away', () => {
+    const emit = jest.fn();
+    const socket = getSocket({emitFn: emit});
+    const [currentPlayer, ...otherPlayers] = getPlayers();
+    const {getAllByTestId} = render(
+      <CurrentUserContext.Provider value={{userEmail: currentPlayer.email, userName: `${currentPlayer.first_name} ${currentPlayer.last_name}`}}>
+        <SudokuBoard 
+          players={otherPlayers.concat(currentPlayer)}
+          playersLockingCells={{}}
+          gridState={getEmptyPieces()}
+          puzzleId={'1'}
+          solved={false}
+          ref={socket}
+        />
+      </CurrentUserContext.Provider>
+    );
+    
+    const sudokuCells = getAllByTestId('sudoku-cell');
+    const emptyCell = sudokuCells[0];
+    act(() => {
+      fireEvent.blur(emptyCell);
+    });
+    expect(emit).toHaveBeenCalledWith('remove_lock', {
+      "puzzle_id": "1", "x_coordinate": 0, "y_coordinate": 0});
+  });
+
   it('calls the move endpoint when an input is made', async () => {
     jest.spyOn(Endpoint, "movePiece").mockImplementation(() => 'http://foo.bar.com:5000/puzzles/1/piece');
     const fetchSpy = jest.spyOn(global, "fetch");

@@ -508,3 +508,25 @@ export const getPuzzleResponse = () => new Response(JSON.stringify({
   "pieces": PIECES,
   "players": PLAYERS,
 }));
+
+export const getMultiplayerPuzzleResponse = () => new Response(JSON.stringify({
+  "puzzle_id": PUZZLE_ID,
+  "completed": COMPLETED,
+  "difficulty": DIFFICULTY,
+  "point_value": POINT_VALUE,
+  "pieces": PIECES,
+  "players": [
+    {
+      "id": 1,
+      "first_name": "Sally",
+      "last_name": "Sue",
+      "email": "sallysue@columbia.edu"
+    },
+    {
+      "id": 2,
+      "first_name": "Billy",
+      "last_name": "Joe",
+      "email": "billyjoe@columbia.edu"
+    }
+  ],
+}));
