@@ -1,18 +1,18 @@
-import React, { useState, useContext, useEffect} from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import CurrentUserContext from '../../context/CurrentUserContext';
 import './SudokuCell.css'
 
 const backgroundColors = Object.freeze([
-  'aliceblue',
-  'honeydew',
-  'lavender',
-  'lavenderblush',
+  '#B9D9EB',
+  'palegreen',
+  'peachpuff',
+  'plum',
 ]);
 
 export default function SudokuCell(props) {
-  const {userEmail} = useContext(CurrentUserContext);
-  const {player, index} = props.playerData ?? {};
+  const { userEmail } = useContext(CurrentUserContext);
+  const { player, index } = props.playerData ?? {};
   const [value, setValue] = useState(props.number);
   const style = {};
   if (props.x % 3 === 0) {
@@ -27,7 +27,7 @@ export default function SudokuCell(props) {
   style.backgroundColor = (index === undefined || index === -1) ? 'white' : backgroundColors[index];
 
   const firstName = player ? `${player.first_name.charAt(0).toUpperCase()}${player.first_name.slice(1)}` : '';
-  const playerDisplayName = 
+  const playerDisplayName =
     player ? (player.last_name ? `${firstName} ${player.last_name[0].toUpperCase()}.` : firstName) : '';
 
   const className = props.prefilled ? 'fixedCell' : 'inputCell';
@@ -38,7 +38,7 @@ export default function SudokuCell(props) {
   }, [props.number]);
 
   return (
-    <input 
+    <input
       data-testid="sudoku-cell"
       type="text"
       pattern="[1-9]"
@@ -57,10 +57,10 @@ export default function SudokuCell(props) {
         }
       }}
       onInput={event => {
-        const userInput = (event.target.validity.valid) ? 
+        const userInput = (event.target.validity.valid) ?
           event.target.value : value;
 
-        if (value !== userInput) {        
+        if (value !== userInput) {
           setValue(userInput);
           props.onNumberChanged(userInput);
         }
@@ -73,7 +73,7 @@ export default function SudokuCell(props) {
 SudokuCell.defaultProps = {
   number: null,
   prefilled: false,
-  onNumberChanged: () => {},
+  onNumberChanged: () => { },
   x: 0,
   y: 0,
   playerData: null,
