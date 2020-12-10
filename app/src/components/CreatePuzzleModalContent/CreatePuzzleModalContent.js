@@ -85,7 +85,7 @@ class CreatePuzzleModal extends React.Component {
             placeholder="joe@gmail.com, mary@gmail.com"
             data-testid="input"
             onChange={event => {
-              const additionalPlayers = event.target.value.replaceAll(' ', '').split(',').filter(player => player);
+              const additionalPlayers = event.target.value.replace(/ /g, '').split(',').filter(player => player);
               this.setState({ additionalPlayers });
             }}
             style={{ width: 255, marginLeft: '29px' }}
